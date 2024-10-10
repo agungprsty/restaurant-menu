@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  tags      String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id        Int           @id @default(autoincrement())
+  name      String
+  slug      String        @unique
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  menus     Menu[]  // Relasi ke Menu
+}
+
+model Menu {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  slug        String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  category    Category      @relation(fields: [categoryId], references: [id])
+  categoryId  Int           // Foreign Key ke Category
+  toppings    MenuToppings[]  // Many-to-many relasi ke Topping melalui MenuToppings
+  specialMenu SpecialMenu?  // Relasi opsional ke SpecialMenu (one-to-one)
+}
+
+model Topping {
+  id              Int       @id @default(autoincrement())
+  name            String
+  price           Float
+  slug            String    @unique
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  menus           MenuToppings[]  // Many-to-many relasi ke Menu melalui MenuToppings
+}
+
+model MenuToppings {
+  menu       Menu    @relation(fields: [menuId], references: [id])
+  menuId     Int
+  topping    Topping @relation(fields: [toppingId], references: [id])
+  toppingId  Int
+
+  @@id([menuId, toppingId]) // Composite key untuk memastikan tidak ada duplikasi relasi
+}
+
+model SpecialMenu {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  menu        Menu      @relation(fields: [menuId], references: [id])
+  menuId      Int       @unique // Foreign Key ke Menu
+  specialType String    // Jenis spesial, misal: "Chef's Recommendation", "Seasonal Menu"
+}
