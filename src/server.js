@@ -2,7 +2,7 @@ const Hapi = require('@hapi/hapi');
 const { graphql } = require('graphql');
 const fs = require('fs');
 const path = require('path');
-const schema = require('./graphql/noteSchema');
+const schema = require('./graphql/schema');
 const routes = require('./routes');
 
 const init = async () => {
@@ -17,6 +17,7 @@ const init = async () => {
   });
 
   server.route(routes);
+  
   // GraphQL endpoint
   server.route({
     method: 'POST',
