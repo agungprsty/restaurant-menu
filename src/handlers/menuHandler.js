@@ -3,9 +3,16 @@ const { menuValidation } = require('../validations/menuValidation');
 const Log = require('../logger');
 
 class MenuHandler {
-  constructor({ menuRepository, categoryRepository }) {
+  constructor({
+    menuRepository,
+    categoryRepository,
+    toppingRepository,
+    menuToppingsRepository,
+  }) {
     this.menuRepository = menuRepository;
     this.categoryRepository = categoryRepository;
+    this.toppingRepository = toppingRepository;
+    this.menuToppingsRepository = menuToppingsRepository;
   }
 
   create = async (req, h) => {
@@ -263,6 +270,86 @@ class MenuHandler {
       response.code(500);
       return response;
     }
+  };
+
+  addMenuTopping = async (req, h) => {
+    const { toppingId } = req.payload;
+    const { id } = req.params;
+
+    const menuId = safeInt(id);
+    const existingMenu = await this.menuRepository.findById(
+      menuId,
+    );
+
+    if (!existingMenu) {
+      Log.error(
+        { path: '/src/menuHandler.js' },
+        `Menu not found: ${id}`,
+      );
+      const response = h.response({
+        status: 'fail',
+        message: 'Menu not found.',
+      });
+      response.code(404);
+      return response;
+    }
+
+    // Validasi apakah toppingId ada di repository
+    const topping = await this.toppingRepository.findById(toppingId);
+
+    if (!topping) {
+      const response = h.response({
+        status: 'fail',
+        message: 'Invalid toppingId',
+      });
+      response.code(400);
+      return response;
+    }
+
+    // Periksa apakah kombinasi menuId dan toppingId sudah ada di MenuToppings
+    const existing = await this.menuToppingsRepository.findByMenuIdAndToppingId(menuId, toppingId);
+    if (existing) {
+      const response = h.response({
+        status: 'fail',
+        message: 'MenuTopping already exists',
+      });
+      response.code(400);
+      return response;
+    }
+
+    // Menambahkan ke tabel pivot MenuToppings
+    const result = await this.menuToppingsRepository.save({ menuId, toppingId });
+
+    return {
+      status: 'success',
+      message: 'MenuTopping successfully added',
+      data: result,
+    };
+  };
+
+  getMenuWithToppings = async (req, h) => {
+    const { id } = req.params;
+    const menu = await this.menuRepository.findById(safeInt(id));
+    
+    if (!menu) {
+      const response = h.response({
+        status: 'fail',
+        message: 'Menu not found',
+      });
+      response.code(404);
+      return response;
+    }
+
+    // Ambil daftar topping yang terkait dengan menuId
+    const toppings = await this.menuToppingsRepository.findToppingsByMenuId(safeInt(id));
+    
+    // Ekstrak hanya data topping dan tambahkan ke menu
+    menu.toppings = toppings.map((item) => item.topping);
+
+    return {
+      status: 'success',
+      data: { menu },
+    };
   };
 }
 

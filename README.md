@@ -69,21 +69,4 @@ Menyimpan menu spesial yang diberikan restoran, seperti menu rekomendasi dari ko
 
 ### Implementasi ER Diagram
 
-+---------------------+         +---------------------+         +----------------------+
-|     Category        | 1      *|      Menu           | *      *|      Topping/Add-ons |
-+---------------------+         +---------------------+         +----------------------+
-| id (PK)             |---------| id (PK)             |---------| id (PK)              |
-| name                |         | name                |         | name                 |
-+---------------------+         | description         |         | price                |
-                                | price               |         | applicable_to_menu_item (FK)|
-                                | category_id (FK)    |         +----------------------+
-                                +---------------------+                   ^
-                                                                          |
-                                                                          |
-                                                              +----------------------+
-                                                              |     SpecialMenu      |
-                                                              +----------------------+
-                                                              | id (PK)              |
-                                                              | menu_item_id (FK)    |
-                                                              | special_type         |
-                                                              +----------------------+
+![schema databases](src/assets/images/schema-databases.png)

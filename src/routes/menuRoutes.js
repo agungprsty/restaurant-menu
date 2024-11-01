@@ -24,6 +24,16 @@ const menuRoutes = (handler) => [
     path: '/menu/{id}',
     handler: handler.delete,
   },
+  {
+    method: 'POST',
+    path: '/menu/{id}/topping',
+    handler: handler.addMenuTopping,
+  },
+  {
+    method: 'GET',
+    path: '/menu/{id}/topping',
+    handler: handler.getMenuWithToppings,
+  },
 ];
 
 module.exports = menuRoutes;
