@@ -24,6 +24,11 @@ const categoryRoutes = (handler) => [
     path: '/category/{id}',
     handler: handler.delete,
   },
+  {
+    method: 'GET',
+    path: '/category/{id}/menu',
+    handler: handler.getMenusByCategory,
+  },
 ];
 
 module.exports = categoryRoutes;

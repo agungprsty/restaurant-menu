@@ -3,8 +3,9 @@ const { categoryValidation } = require('../validations/categoryValidation');
 const Log = require('../logger');
 
 class CategoryHandler {
-  constructor({ categoryRepository }) {
+  constructor({ categoryRepository, menuRepository }) {
     this.categoryRepository = categoryRepository;
+    this.menuRepository = menuRepository;
   }
 
   create = async (req, h) => {
@@ -214,6 +215,28 @@ class CategoryHandler {
       response.code(500);
       return response;
     }
+  };
+
+  getMenusByCategory = async (req, h) => {
+    const { id } = req.params;
+    const category = await this.categoryRepository.findById(safeInt(id));
+
+    if (!category) {
+      const response = h.response({
+        status: 'fail',
+        message: 'Category not found',
+      });
+      response.code(404);
+      return response;
+    }
+
+    const menus = await this.menuRepository.findByCategoryId(safeInt(id));
+    category.menus = menus;
+
+    return {
+      status: 'success',
+      data: { category },
+    };
   };
 }
 

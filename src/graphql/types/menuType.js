@@ -3,7 +3,9 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
+  GraphQLList,
 } = require('graphql');
+const ToppingType = require('./toppingType');
 
 const MenuType = new GraphQLObjectType({
   name: 'Menu',
@@ -16,6 +18,7 @@ const MenuType = new GraphQLObjectType({
     categoryId: { type: GraphQLInt },
     createdAt: { type: GraphQLFloat },
     updatedAt: { type: GraphQLFloat },
+    toppings: { type: new GraphQLList(ToppingType) },
   }),
 });
 

@@ -46,6 +46,26 @@ function slugify(text) {
     .replace(/^-+|-+$/g, ''); // Trim - from start and end
 }
 
+/**
+ * hasField untuk memeriksa apakah field tertentu diminta dalam query
+ * @param {*} info - The info from QraphQL query
+ * @param {*} fieldName - Name field
+ * @returns {boolean}
+ */
+const hasField = (info, fieldName) => {
+  const checkFields = (selections) => selections.some((selection) => {
+    if (selection.name.value === fieldName) {
+      return true;
+    }
+    if (selection.selectionSet) {
+      return checkFields(selection.selectionSet.selections);
+    }
+    return false;
+  });
+
+  return checkFields(info.fieldNodes[0].selectionSet.selections);
+};
+
 module.exports = {
-  now, safeInt, safeFloat, slugify,
+  now, safeInt, safeFloat, slugify, hasField,
 };

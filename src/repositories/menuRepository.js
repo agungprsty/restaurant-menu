@@ -75,6 +75,16 @@ class MenuRepository {
       throw new Error(`Database error: ${error.message}`);
     }
   }
+
+  async findByCategoryId(categoryId) {
+    try {
+      return this.prisma.menu.findMany({
+        where: { categoryId },
+      });
+    } catch (error) {
+      throw new Error(`Database error: ${error.message}`);
+    }
+  }
 }
 
 module.exports = MenuRepository;

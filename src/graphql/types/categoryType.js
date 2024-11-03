@@ -3,7 +3,9 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
+  GraphQLList,
 } = require('graphql');
+const MenuType = require('./menuType');
 
 const CategoryType = new GraphQLObjectType({
   name: 'Category',
@@ -13,6 +15,7 @@ const CategoryType = new GraphQLObjectType({
     slug: { type: GraphQLString },
     createdAt: { type: GraphQLFloat },
     updatedAt: { type: GraphQLFloat },
+    menus: { type: new GraphQLList(MenuType) },
   }),
 });
 
