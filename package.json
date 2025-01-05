@@ -1,5 +1,5 @@
 {
-  "name": "notes-app-back-end",
+  "name": "hapi-tuhir",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,22 +13,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^8.38.0",
-    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint": "^9.17.0",
     "eslint-plugin-import": "^2.27.5",
     "nodemon": "^3.1.7",
     "prettier": "^2.8.7"
   },
   "dependencies": {
     "@hapi/hapi": "^21.3.1",
-    "@prisma/client": "^5.19.1",
-    "awilix": "^11.0.0",
-    "bunyan": "^1.8.15",
-    "bunyan-rotating-file-stream": "^2.0.6",
+    "@prisma/client": "^6.1.0",
+    "awilix": "^12.0.4",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0",
     "graphi": "^9.1.1",
     "joi": "^17.13.3",
     "moment-timezone": "^0.5.45",
-    "nanoid": "^3.3.6",
-    "prisma": "^5.19.1"
+    "nanoid": "^5.0.9",
+    "prisma": "^6.1.0",
+    "lodash": "^4.17.21"
   }
 }

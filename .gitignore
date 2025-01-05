@@ -2,3 +2,5 @@ node_modules/
 prisma/migrations/*
 logs/app*
 .env
+run_k6.sh
+*_test.js

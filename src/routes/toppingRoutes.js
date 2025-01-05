@@ -1,27 +1,27 @@
 const toppingRoutes = (handler) => [
   {
     method: 'POST',
-    path: '/topping',
+    path: '/api/topping',
     handler: handler.create,
   },
   {
     method: 'GET',
-    path: '/topping',
+    path: '/api/topping',
     handler: handler.findAll,
   },
   {
     method: 'GET',
-    path: '/topping/{id}',
+    path: '/api/topping/{id}',
     handler: handler.findById,
   },
   {
     method: 'PUT',
-    path: '/topping/{id}',
+    path: '/api/topping/{id}',
     handler: handler.update,
   },
   {
     method: 'DELETE',
-    path: '/topping/{id}',
+    path: '/api/topping/{id}',
     handler: handler.delete,
   },
 ];

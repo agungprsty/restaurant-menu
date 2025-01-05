@@ -1,32 +1,32 @@
 const categoryRoutes = (handler) => [
   {
     method: 'POST',
-    path: '/category',
+    path: '/api/category',
     handler: handler.create,
   },
   {
     method: 'GET',
-    path: '/category',
+    path: '/api/category',
     handler: handler.findAll,
   },
   {
     method: 'GET',
-    path: '/category/{id}',
+    path: '/api/category/{id}',
     handler: handler.findById,
   },
   {
     method: 'PUT',
-    path: '/category/{id}',
+    path: '/api/category/{id}',
     handler: handler.update,
   },
   {
     method: 'DELETE',
-    path: '/category/{id}',
+    path: '/api/category/{id}',
     handler: handler.delete,
   },
   {
     method: 'GET',
-    path: '/category/{id}/menu',
+    path: '/api/category/{id}/menu',
     handler: handler.getMenusByCategory,
   },
 ];

@@ -1,37 +1,37 @@
 const menuRoutes = (handler) => [
   {
     method: 'POST',
-    path: '/menu',
+    path: '/api/menu',
     handler: handler.create,
   },
   {
     method: 'GET',
-    path: '/menu',
+    path: '/api/menu',
     handler: handler.findAll,
   },
   {
     method: 'GET',
-    path: '/menu/{id}',
+    path: '/api/menu/{id}',
     handler: handler.findById,
   },
   {
     method: 'PUT',
-    path: '/menu/{id}',
+    path: '/api/menu/{id}',
     handler: handler.update,
   },
   {
     method: 'DELETE',
-    path: '/menu/{id}',
+    path: '/api/menu/{id}',
     handler: handler.delete,
   },
   {
     method: 'POST',
-    path: '/menu/{id}/topping',
+    path: '/api/menu/{id}/topping',
     handler: handler.addMenuTopping,
   },
   {
     method: 'GET',
-    path: '/menu/{id}/topping',
+    path: '/api/menu/{id}/topping',
     handler: handler.getMenuWithToppings,
   },
 ];
